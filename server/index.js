@@ -8,6 +8,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import authRoutes from "./routes/auth.js";
+import { register } from "./controllers/auth.js";
 
 // Configurations
 const __filename = fileURLToPath(import.meta.url); // for obtaining the file path of the current module being executed.
@@ -47,6 +49,13 @@ Configuring a storage engine for multer that will store uploaded files in the pu
 
 const upload = multer({ storage });
 /* The upload constant is created by passing the storage object to the multer function. This creates a new instance of multer that can be used as middleware in an Express.js application. */
+
+/* Routes with Files */
+app.post("/auth/register", upload.single("picture"), register);
+
+/* Routes */
+app.use("/auth", authRoutes);
+ 
 
 /* Mongoose Setup*/
 const PORT = process.env.PORT || 6001;
