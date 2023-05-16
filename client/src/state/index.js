@@ -29,7 +29,7 @@ export const authSlice = createSlice({
             if (state.user) {
                 state.user.friends = action.payload.friends;
             } else {
-                ContentCutOutlined.log("User friends non-existent :(");
+                console.error("user friends non-existent :(");
             }
         },
 
