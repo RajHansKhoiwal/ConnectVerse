@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-import { useNavigate } from "react-router-dom";
+
 
 const Friend = ({ friendId, name, subtitle, userPicturepath }) => {
     const dispatch = useDispatch();
@@ -65,7 +65,7 @@ const Friend = ({ friendId, name, subtitle, userPicturepath }) => {
                         >
                             {name}
                         </Typography>
-                        <Typography color={meduim} fontSize="0.75rem">
+                        <Typography color={medium} fontSize="0.75rem">
                             {subtitle}
 
                         </Typography>
@@ -86,6 +86,7 @@ const Friend = ({ friendId, name, subtitle, userPicturepath }) => {
                 </IconButton>
             </FlexBetween>
         );
-    }
+    };
 
-}
+};
+export default Friend;
