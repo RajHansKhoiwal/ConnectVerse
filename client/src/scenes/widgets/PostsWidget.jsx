@@ -8,23 +8,23 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     const posts = useSelector((state) => state.posts);
     const token = useSelector((state) => state.token);
 
-    //Now two api call for getting all users post and then a specific user's post
     const getPosts = async () => {
         const response = await fetch("http://localhost:3001/posts", {
             method: "GET",
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         });
-
         const data = await response.json();
         dispatch(setPosts({ posts: data }));
     };
 
     const getUserPosts = async () => {
-        const response = await fetch(`http://localhost:3001/posts/${userId}/posts`, {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}` }
-        });
-
+        const response = await fetch(
+            `http://localhost:3001/posts/${userId}/posts`,
+            {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
         const data = await response.json();
         dispatch(setPosts({ posts: data }));
     };
@@ -35,7 +35,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         } else {
             getPosts();
         }
-    }, []); //eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
@@ -48,11 +48,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                     description,
                     location,
                     picturePath,
-                    UserPicturePath,
+                    userPicturePath,
                     likes,
-                    comments
+                    comments,
                 }) => (
-                    < PostWidget
+                    <PostWidget
                         key={_id}
                         postId={_id}
                         postUserId={userId}
@@ -60,16 +60,14 @@ const PostsWidget = ({ userId, isProfile = false }) => {
                         description={description}
                         location={location}
                         picturePath={picturePath}
-                        UserPicturePath={UserPicturePath}
+                        userPicturePath={userPicturePath}
                         likes={likes}
                         comments={comments}
                     />
                 )
             )}
-
         </>
-    )
+    );
 };
-
 
 export default PostsWidget;

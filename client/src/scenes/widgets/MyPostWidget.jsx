@@ -1,15 +1,22 @@
 import {
     EditOutlined,
-    DeleteOutline,
+    DeleteOutlined,
     AttachFileOutlined,
     GifBoxOutlined,
     ImageOutlined,
     MicOutlined,
-    MoreHorizOutlined
-} from "@mui/icons-material"
-
-import { Box, Divider, Typography, InputBase, useTheme, Button, IconButton, useMediaQuery } from "@mui/material";
-
+    MoreHorizOutlined,
+} from "@mui/icons-material";
+import {
+    Box,
+    Divider,
+    Typography,
+    InputBase,
+    useTheme,
+    Button,
+    IconButton,
+    useMediaQuery,
+} from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
 import UserImage from "components/UserImage";
@@ -20,9 +27,9 @@ import { setPosts } from "state";
 
 const MyPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch();
-    const [isImage, setIsImage] = useState(false); // to indicate if someone has clicked image button top open up a space to drop image
-    const [image, setImage] = useState(null); // actual image if we drop it
-    const [post, setPost] = useState(""); // actual post content or description
+    const [isImage, setIsImage] = useState(false);
+    const [image, setImage] = useState(null);
+    const [post, setPost] = useState("");
     const { palette } = useTheme();
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
@@ -39,33 +46,30 @@ const MyPostWidget = ({ picturePath }) => {
             formData.append("picturePath", image.name);
         }
 
-        // Sending Post information to the backend
         const response = await fetch(`http://localhost:3001/posts`, {
-            method: "Post",
+            method: "POST",
             headers: { Authorization: `Bearer ${token}` },
-            body: formData
+            body: formData,
         });
-
-        // backend returning list of updates posts 
         const posts = await response.json();
         dispatch(setPosts({ posts }));
-        setImage(null); //resetting the states after making api calls
+        setImage(null);
         setPost("");
     };
 
     return (
         <WidgetWrapper>
             <FlexBetween gap="1.5rem">
-                <UserImage image={picturePath} /> {/* Circular small profile picture */}
+                <UserImage image={picturePath} />
                 <InputBase
-                    placeholder="Create a post"
+                    placeholder="What's on your mind..."
                     onChange={(e) => setPost(e.target.value)}
                     value={post}
                     sx={{
                         width: "100%",
                         backgroundColor: palette.neutral.light,
                         borderRadius: "2rem",
-                        padding: "1rem 2rem"
+                        padding: "1rem 2rem",
                     }}
                 />
             </FlexBetween>
@@ -79,8 +83,7 @@ const MyPostWidget = ({ picturePath }) => {
                     <Dropzone
                         acceptedFiles=".jpg,.jpeg,.png"
                         multiple={false}
-                        onDrop={(acceptedFiles) => setImage(acceptedFiles[0])
-                        }
+                        onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
                     >
                         {({ getRootProps, getInputProps }) => (
                             <FlexBetween>
@@ -101,25 +104,23 @@ const MyPostWidget = ({ picturePath }) => {
                                         </FlexBetween>
                                     )}
                                 </Box>
-                                {/* Giving Trash Icon to delete upload image */}
                                 {image && (
                                     <IconButton
                                         onClick={() => setImage(null)}
                                         sx={{ width: "15%" }}
                                     >
-                                        <DeleteOutline />
-
+                                        <DeleteOutlined />
                                     </IconButton>
                                 )}
                             </FlexBetween>
                         )}
                     </Dropzone>
-
                 </Box>
             )}
+
             <Divider sx={{ margin: "1.25rem 0" }} />
+
             <FlexBetween>
-                {/* For Opening Image Dropzone */}
                 <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
                     <ImageOutlined sx={{ color: mediumMain }} />
                     <Typography
@@ -128,8 +129,8 @@ const MyPostWidget = ({ picturePath }) => {
                     >
                         Image
                     </Typography>
-
                 </FlexBetween>
+
                 {isNonMobileScreens ? (
                     <>
                         <FlexBetween gap="0.25rem">
@@ -146,11 +147,12 @@ const MyPostWidget = ({ picturePath }) => {
                             <MicOutlined sx={{ color: mediumMain }} />
                             <Typography color={mediumMain}>Audio</Typography>
                         </FlexBetween>
-
                     </>
-                ) : (<FlexBetween gap="0.25rem">
-                    <MoreHorizOutlined sx={{ color: mediumMain }} />
-                </FlexBetween>)}
+                ) : (
+                    <FlexBetween gap="0.25rem">
+                        <MoreHorizOutlined sx={{ color: mediumMain }} />
+                    </FlexBetween>
+                )}
 
                 <Button
                     disabled={!post}
@@ -158,13 +160,13 @@ const MyPostWidget = ({ picturePath }) => {
                     sx={{
                         color: palette.background.alt,
                         backgroundColor: palette.primary.main,
-                        borderRadius: "3rem"
+                        borderRadius: "3rem",
                     }}
                 >
                     POST
                 </Button>
             </FlexBetween>
-        </WidgetWrapper >
+        </WidgetWrapper>
     );
 };
 

@@ -18,7 +18,7 @@ import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
 
-// Configurations
+/* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url); // for obtaining the file path of the current module being executed.
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -37,18 +37,20 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 /*In this specific case, bodyParser.json() is a method that parses incoming requests with JSON payloads. The limit option specifies the maximum size in bytes allowed in the HTTP request body. In this case, the maximum allowed size is 30 megabytes. The extended option enables extended syntax for parsing complex JSON data structures.*/
 
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // to parse incoming requests with urlencoded payloads. 
-app.use(cors()); //invoke cross origin resource sharing policies
-app.use("/assets", express.static(path.join(__dirname, 'public/assets'))); //sets the directory of where we are gonna store our assets.
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // to parse incoming requests with urlencoded payloads.
 
-// File Storage configurations
+app.use(cors());    //invoke cross origin resource sharing policies
+
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));  //sets the directory of where we are gonna store our assets.
+
+/* FILE STORAGE */
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "public/assets");
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
-    }
+    },
 });
 /*
 Defining a storage engine for multer, a Node.js middleware used for handling multipart/form-data, which is commonly used for uploading files.
@@ -57,25 +59,27 @@ Configuring a storage engine for multer that will store uploaded files in the pu
 const upload = multer({ storage });
 /* The upload constant is created by passing the storage object to the multer function. This creates a new instance of multer that can be used as middleware in an Express.js application. */
 
-/* Routes with Files */
+/* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
-
-/* Routes */
+/* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-/* Mongoose Setup*/
+/* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    app.listen(PORT, () => console.log(`Server Port : ${PORT}`));
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
-    /* Adding Data only once*/
-    // User.insertMany(users);
-    // Post.insertMany(posts);
-}).catch((error) => console.log(`${error} did not connect`));
+        /* ADD DATA ONE TIME */
+        // User.insertMany(users);
+        // Post.insertMany(posts);
+    })
+    .catch((error) => console.log(`${error} did not connect`));

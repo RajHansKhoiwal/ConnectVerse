@@ -7,7 +7,7 @@ import {
     Select,
     MenuItem,
     FormControl,
-    useTheme,   
+    useTheme,
     useMediaQuery,
 } from "@mui/material";
 import {
@@ -47,11 +47,11 @@ const Navbar = () => {
                 <Typography
                     fontWeight="bold"
                     fontSize="clamp(1rem, 2rem, 2.25rem)"
-                    color="blue"
+                    color="primary"
                     onClick={() => navigate("/home")}
                     sx={{
                         "&:hover": {
-                            color: "green",
+                            color: primaryLight,
                             cursor: "pointer",
                         },
                     }}
@@ -76,17 +76,17 @@ const Navbar = () => {
             {/* DESKTOP NAV */}
             {isNonMobileScreens ? (
                 <FlexBetween gap="2rem">
+                    <IconButton onClick={() => dispatch(setMode())}>
+                        {theme.palette.mode === "dark" ? (
+                            <DarkMode sx={{ fontSize: "25px" }} />
+                        ) : (
+                            <LightMode sx={{ color: dark, fontSize: "25px" }} />
+                        )}
+                    </IconButton>
                     <Message sx={{ fontSize: "25px" }} />
                     <Notifications sx={{ fontSize: "25px" }} />
                     <Help sx={{ fontSize: "25px" }} />
                     <FormControl variant="standard" value={fullName}>
-                        <IconButton onClick={() => dispatch(setMode())}>
-                            {theme.palette.mode === "dark" ? (
-                                <DarkMode sx={{ fontSize: "25px" }} />
-                            ) : (
-                                <LightMode sx={{ color: dark, fontSize: "25px" }} />
-                            )}
-                        </IconButton>
                         <Select
                             value={fullName}
                             sx={{
