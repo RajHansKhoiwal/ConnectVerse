@@ -14,7 +14,10 @@ export const register = async (req, res) => {
             picturePath,
             friends,
             location,
-            occupation
+            occupation,
+            twitterId,
+            linkedinId,
+            instagramId
         } = req.body;
 
         const salt = await bcrypt.genSalt();
@@ -32,6 +35,9 @@ export const register = async (req, res) => {
             friends,
             location,
             occupation,
+            twitterId,
+            linkedinId,
+            instagramId,
             viewedProfile: Math.floor(Math.random() * 1000), // some random value
             impressions: Math.floor(Math.random() * 1000)
         });
@@ -58,7 +64,7 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password); //compared the stored password with the provided one with the same salt as before
 
         if (!isMatch) return res.status(400).json({ msg: "Incorrect Password." });
-        /* If the password is matchde then pass the json web token. */
+        /* If the password is matched then pass the json web token. */
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
         delete user.password; //delete the password so it doesn't get sent back to the frontend

@@ -24,6 +24,9 @@ const registerSchema = yup.object().shape({
     location: yup.string().required("required"),
     occupation: yup.string().required("required"),
     picture: yup.string().required("required"),
+    twitterId: yup.string(),
+    linkedinIdId: yup.string(),
+    instagramIdId: yup.string(),
 });
 
 const loginSchema = yup.object().shape({
@@ -39,6 +42,9 @@ const initialValuesRegister = {
     location: "",
     occupation: "",
     picture: "",
+    twitterId: "",
+    linkedinId: "",
+    instagramId: "",
 };
 
 const initialValuesLogin = {
@@ -162,7 +168,7 @@ const Form = () => {
                                     sx={{ gridColumn: "span 4" }}
                                 />
                                 <TextField
-                                    label="Occupation"
+                                    label="Occupation/Bio"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.occupation}
@@ -173,6 +179,48 @@ const Form = () => {
                                     helperText={touched.occupation && errors.occupation}
                                     sx={{ gridColumn: "span 4" }}
                                 />
+                                <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
+                                    Other Social Profiles
+                                </Typography>
+                                <TextField
+                                    label="Twitter Handle"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.twitterId}
+                                    name="twitterId"
+                                    error={
+                                        Boolean(touched.occupation) && Boolean(errors.occupation)
+                                    }
+                                    helperText={touched.occupation && errors.occupation}
+                                    sx={{ gridColumn: "span 4" }}
+                                />
+
+                                <TextField
+                                    label="Linkedin Profile URL"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.linkedinId}
+                                    name="linkedinId"
+                                    error={
+                                        Boolean(touched.occupation) && Boolean(errors.occupation)
+                                    }
+                                    helperText={touched.occupation && errors.occupation}
+                                    sx={{ gridColumn: "span 4" }}
+                                />
+
+                                <TextField
+                                    label="Instagram Handle"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.instagramId}
+                                    name="instagramId"
+                                    error={
+                                        Boolean(touched.occupation) && Boolean(errors.occupation)
+                                    }
+                                    helperText={touched.occupation && errors.occupation}
+                                    sx={{ gridColumn: "span 4" }}
+                                />
+
                                 <Box
                                     gridColumn="span 4"
                                     border={`1px solid ${palette.neutral.medium}`}

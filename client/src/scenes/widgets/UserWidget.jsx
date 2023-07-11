@@ -46,6 +46,9 @@ const UserWidget = ({ userId, picturePath }) => {
         viewedProfile,
         impressions,
         friends,
+        twitterId,
+        linkedinId,
+        instagramId,
     } = user;
 
     return (
@@ -118,30 +121,50 @@ const UserWidget = ({ userId, picturePath }) => {
                     Social Profiles
                 </Typography>
 
-                <FlexBetween gap="1rem" mb="0.5rem">
+                <FlexBetween gap="1rem" mb="1rem">
                     <FlexBetween gap="1rem">
                         <img src="../assets/twitter.png" alt="twitter" />
                         <Box>
                             <Typography color={main} fontWeight="500">
-                                Twitter
+                                Twitter Handle
                             </Typography>
-                            <Typography color={medium}>Social Network</Typography>
+
+                            <Typography color={medium} fontWeight="500">
+                                {twitterId !== "" ? twitterId : "Not Mentioned"}
+                            </Typography>
+
                         </Box>
                     </FlexBetween>
-                    <EditOutlined sx={{ color: main }} />
+                    {/* <EditOutlined sx={{ color: main }} /> */}
                 </FlexBetween>
 
-                <FlexBetween gap="1rem">
+                <FlexBetween gap="1rem" mb="1rem">
                     <FlexBetween gap="1rem">
                         <img src="../assets/linkedin.png" alt="linkedin" />
                         <Box>
                             <Typography color={main} fontWeight="500">
                                 Linkedin
                             </Typography>
-                            <Typography color={medium}>Network Platform</Typography>
+                            <Typography color={medium}> {linkedinId !== "" ? (<a href={linkedinId} target="_blank" style={{ color: medium }}>{firstName} {lastName}</a>) : "Not Mentioned"}</Typography>
                         </Box>
                     </FlexBetween>
-                    <EditOutlined sx={{ color: main }} />
+                    {/* <EditOutlined sx={{ color: main }} /> */}
+                </FlexBetween>
+
+                <FlexBetween gap="1rem">
+                    <FlexBetween gap="1rem">
+                        <img src="../assets/instagram.png" alt="instagram" />
+                        <Box>
+                            <Typography color={main} fontWeight="500">
+                                Instagram Handle
+                            </Typography>
+                            <Typography color={medium}>
+                                {instagramId !== "" ? (<a href={`https://www.instagram.com/${instagramId}`} target="_blank"
+                                    style={{ color: medium }}>{instagramId} </a>) : "Not Mentioned"}
+                            </Typography>
+                        </Box>
+                    </FlexBetween>
+                    {/* <EditOutlined sx={{ color: main }} /> */}
                 </FlexBetween>
             </Box>
         </WidgetWrapper>
