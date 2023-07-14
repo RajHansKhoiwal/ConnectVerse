@@ -59,6 +59,19 @@ const Navbar = () => {
                 >
                     ConnectVerse
                 </Typography>
+
+                <Typography
+                    fontSize="clamp(0.35rem, 0.75rem, 1rem)"
+                    color="primary"
+                    style={{
+                        position: "relative",
+                        bottom: -7,
+                        right: 23,
+                    }}
+                >
+                    Beta
+                </Typography>
+
                 {isNonMobileScreens && (
                     <FlexBetween
                         backgroundColor={neutralLight}
