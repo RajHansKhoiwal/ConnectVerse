@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
+import { updateProfile } from "./controllers/users.js";
 import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
@@ -34,12 +35,12 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 /*morgan("common") is a middleware package that logs HTTP requests and responses. It provides various pre-defined logging formats, and the "common" format includes the standard Apache combined log format, which logs the remote IP address, request method, URL, HTTP version, status code, response size, and referrer. When used as middleware, morgan logs each HTTP request and response to the console or to a log file, depending on the configuration.*/
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ limit: "30mb" }));
 /*In this specific case, bodyParser.json() is a method that parses incoming requests with JSON payloads. The limit option specifies the maximum size in bytes allowed in the HTTP request body. In this case, the maximum allowed size is 30 megabytes. The extended option enables extended syntax for parsing complex JSON data structures.*/
 
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // to parse incoming requests with urlencoded payloads.
 
-app.use(cors());    //invoke cross origin resource sharing policies
+app.use(cors({ origin: "*" }));    //invoke cross origin resource sharing policies
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));  //sets the directory of where we are gonna store our assets.
 
@@ -63,10 +64,12 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
+
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

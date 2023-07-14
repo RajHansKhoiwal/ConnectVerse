@@ -17,10 +17,12 @@ export const createPost = async (req, res) => {
             likes: {},
             comments: [],
         });
-        await newPost.save();
+        await newPost.save(); // Saving the newly created posts.
 
+        // Grabbing all the posts and then returning them to the frontend.
         const post = await Post.find();
         res.status(201).json(post);
+
     } catch (err) {
         res.status(409).json({ message: err.message });
     }

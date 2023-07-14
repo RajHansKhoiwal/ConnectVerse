@@ -78,7 +78,6 @@ const UserWidget = ({ userId, picturePath }) => {
                         <Typography color={medium}>{friends.length} friends</Typography>
                     </Box>
                 </FlexBetween>
-                <ManageAccountsOutlined />
             </FlexBetween>
 
             <Divider />
@@ -148,7 +147,6 @@ const UserWidget = ({ userId, picturePath }) => {
                             <Typography color={medium}> {linkedinId !== "" ? (<a href={linkedinId} target="_blank" style={{ color: medium }}>{firstName} {lastName}</a>) : "Not Mentioned"}</Typography>
                         </Box>
                     </FlexBetween>
-                    {/* <EditOutlined sx={{ color: main }} /> */}
                 </FlexBetween>
 
                 <FlexBetween gap="1rem">

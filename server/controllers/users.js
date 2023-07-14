@@ -16,6 +16,7 @@ export const getUserFriends = async (req, res) => {
         const { id } = req.params;
         const user = await User.findById(id);
 
+        // Make Multiple API's to the database
         const friends = await Promise.all(
             user.friends.map((id) => User.findById(id))
         );
@@ -57,6 +58,40 @@ export const addRemoveFriend = async (req, res) => {
         );
 
         res.status(200).json(formattedFriends);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
+
+
+export const updateProfile = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const {
+            firstName,
+            lastName,
+            location,
+            occupation,
+            twitterId,
+            linkedinId,
+            instagramId,
+        } = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            {
+                firstName: firstName,
+                lastName: lastName,
+                location: location,
+                occupation: occupation,
+                twitterId: twitterId,
+                linkedinId: linkedinId,
+                instagramId: instagramId,
+            },
+        );
+
+        res.status(200).json(updatedUser);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
