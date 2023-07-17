@@ -48,7 +48,8 @@ const Form = ({ userId }) => {
     }
 
     const {
-        picturePath,
+        firstName,
+        lastName,
         location,
         occupation,
         twitterId,
@@ -57,7 +58,8 @@ const Form = ({ userId }) => {
     } = user;
 
     const initialValuesRegister = {
-        picturePath: user.picturePath,
+        firstName: user.firstName,
+        lastName: user.lastName,
         location: user.location,
         occupation: user.occupation,
         twitterId: user.twitterId,
@@ -68,18 +70,10 @@ const Form = ({ userId }) => {
     const EditProfile = async (values, onSubmitProps) => {
         try {
 
-            const formData = new FormData();
-            formData.append("location", values.location);
-            formData.append("occupation", values.occupation);
-            formData.append("twitterId", values.twitterId);
-            formData.append("linkedinId", values.linkedinId);
-            formData.append("instagramId", values.instagramId);
-            formData.append("picturePath", values.picturePath.path);
-
             const savedUserResponse = await fetch(`http://localhost:3001/users/${userId}`, {
                 method: "PATCH",
-                headers: { Authorization: `Bearer ${token}` },
-                body: formData
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+                body: JSON.stringify(values)
             });
 
             if (!savedUserResponse.ok) {
@@ -127,6 +121,28 @@ const Form = ({ userId }) => {
                         }}
                     >
 
+                        <TextField
+                            label="First Name"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.firstName}
+                            name="firstName"
+                            error={
+                                Boolean(touched.firstName) && Boolean(errors.firstName)
+                            }
+                            helperText={touched.firstName && errors.firstName}
+                            sx={{ gridColumn: "span 2" }}
+                        />
+                        <TextField
+                            label="Last Name"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.lastName}
+                            name="lastName"
+                            error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                            helperText={touched.lastName && errors.lastName}
+                            sx={{ gridColumn: "span 2" }}
+                        />
                         <TextField
                             label="Location"
                             onBlur={handleBlur}
@@ -191,7 +207,7 @@ const Form = ({ userId }) => {
                             sx={{ gridColumn: "span 4" }}
                         />
 
-                        <Box
+                        {/* <Box
                             gridColumn="span 4"
                             border={`1px solid ${palette.neutral.medium}`}
                             borderRadius="5px"
@@ -213,10 +229,10 @@ const Form = ({ userId }) => {
                                     >
                                         <input {...getInputProps()} />
                                         {!values.picturePath ? (
-                                            <p>Add Profile Picture</p>
+                                            <p>Add Picture Here</p>
                                         ) : (
                                             <FlexBetween>
-                                                <p> Update Profile Picture</p>
+                                                <p>{values.picturePath}</p>
                                                 <Typography>{values.picturePath.name}</Typography>
                                                 <EditOutlinedIcon />
                                             </FlexBetween>
@@ -224,7 +240,7 @@ const Form = ({ userId }) => {
                                     </Box>
                                 )}
                             </Dropzone>
-                        </Box>
+                        </Box> */}
 
                     </Box>
 

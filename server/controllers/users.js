@@ -68,20 +68,21 @@ export const updateProfile = async (req, res) => {
     try {
 
         const { id } = req.params;
-
         const {
+            firstName,
+            lastName,
             location,
             occupation,
             twitterId,
             linkedinId,
             instagramId,
-            picturePath,
         } = req.body;
 
         const updatedUser = await User.findByIdAndUpdate(
             id,
             {
-                picturePath: picturePath,
+                firstName: firstName,
+                lastName: lastName,
                 location: location,
                 occupation: occupation,
                 twitterId: twitterId,
