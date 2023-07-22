@@ -48,8 +48,7 @@ const Form = ({ userId }) => {
     }
 
     const {
-        firstName,
-        lastName,
+        picturePath,
         location,
         occupation,
         twitterId,
@@ -58,8 +57,7 @@ const Form = ({ userId }) => {
     } = user;
 
     const initialValuesRegister = {
-        firstName: user.firstName,
-        lastName: user.lastName,
+        picturePath: user.picturePath,
         location: user.location,
         occupation: user.occupation,
         twitterId: user.twitterId,
@@ -70,10 +68,16 @@ const Form = ({ userId }) => {
     const EditProfile = async (values, onSubmitProps) => {
         try {
 
+            const formData = new FormData();
+            for (let value in values) {
+                formData.append(value, values[value]);
+            }
+            formData.append("picturePath", values.picturePath.path);
+
             const savedUserResponse = await fetch(`http://localhost:3001/users/${userId}`, {
                 method: "PATCH",
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-                body: JSON.stringify(values)
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData
             });
 
             if (!savedUserResponse.ok) {
@@ -81,6 +85,30 @@ const Form = ({ userId }) => {
             }
 
             const savedUser = await savedUserResponse.json();
+
+        } catch (error) {
+            console.error(error.message);
+            // Handle the error appropriately (e.g., show an error message)
+        }
+    };
+
+    const editProfilePic = async (values, onSubmitProps) => {
+        try {
+
+            console.log("to Update Profile pic", values.picturePath.path);
+
+            const picture = { userPicturePath: values.picturePath.path };
+
+            const response = await fetch(
+                `http://localhost:3001/posts/editprofilepic/${userId}`,
+                {
+                    method: "PATCH",
+                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+                    body: JSON.stringify(picture)
+                }
+            );
+            const data = await response.json();
+            console.log(data);
             onSubmitProps.resetForm();
             navigate("/home");
         } catch (error) {
@@ -90,10 +118,9 @@ const Form = ({ userId }) => {
     };
 
 
-
-
     const handleFormSubmit = async (values, onSubmitProps) => {
         await EditProfile(values, onSubmitProps);
+        await editProfilePic(values, onSubmitProps);
     };
 
     return (
@@ -121,28 +148,6 @@ const Form = ({ userId }) => {
                         }}
                     >
 
-                        <TextField
-                            label="First Name"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.firstName}
-                            name="firstName"
-                            error={
-                                Boolean(touched.firstName) && Boolean(errors.firstName)
-                            }
-                            helperText={touched.firstName && errors.firstName}
-                            sx={{ gridColumn: "span 2" }}
-                        />
-                        <TextField
-                            label="Last Name"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.lastName}
-                            name="lastName"
-                            error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                            helperText={touched.lastName && errors.lastName}
-                            sx={{ gridColumn: "span 2" }}
-                        />
                         <TextField
                             label="Location"
                             onBlur={handleBlur}
@@ -207,7 +212,7 @@ const Form = ({ userId }) => {
                             sx={{ gridColumn: "span 4" }}
                         />
 
-                        {/* <Box
+                        <Box
                             gridColumn="span 4"
                             border={`1px solid ${palette.neutral.medium}`}
                             borderRadius="5px"
@@ -216,9 +221,11 @@ const Form = ({ userId }) => {
                             <Dropzone
                                 acceptedFiles=".jpg,.jpeg,.png"
                                 multiple={false}
-                                onDrop={(acceptedFiles) =>
-                                    setFieldValue("picturePath", acceptedFiles[0])
-                                }
+                                onDrop={(acceptedFiles) => {
+                                    console.log(acceptedFiles); // Check if the file data is received correctly
+                                    setFieldValue("picturePath", acceptedFiles[0]);
+                                }}
+
                             >
                                 {({ getRootProps, getInputProps }) => (
                                     <Box
@@ -229,10 +236,10 @@ const Form = ({ userId }) => {
                                     >
                                         <input {...getInputProps()} />
                                         {!values.picturePath ? (
-                                            <p>Add Picture Here</p>
+                                            <p>Add Profile Picture</p>
                                         ) : (
                                             <FlexBetween>
-                                                <p>{values.picturePath}</p>
+                                                <p> Update Profile Picture</p>
                                                 <Typography>{values.picturePath.name}</Typography>
                                                 <EditOutlinedIcon />
                                             </FlexBetween>
@@ -240,7 +247,7 @@ const Form = ({ userId }) => {
                                     </Box>
                                 )}
                             </Dropzone>
-                        </Box> */}
+                        </Box>
 
                     </Box>
 

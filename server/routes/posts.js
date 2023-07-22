@@ -1,5 +1,5 @@
 import express from "express";
-import { getFeedPosts, getUserPosts, likePost } from "../controllers/posts.js";
+import { getFeedPosts, getUserPosts, likePost, updateUserPicturePath } from "../controllers/posts.js";
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -10,5 +10,6 @@ router.get("/:userId/posts", verifyToken, getUserPosts); // Show every post for 
 
 /* UPDATE */
 router.patch("/:id/like", verifyToken, likePost);
+router.patch("/editprofilepic/:id", verifyToken, updateUserPicturePath);
 
 export default router;

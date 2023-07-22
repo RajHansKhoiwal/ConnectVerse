@@ -40,7 +40,8 @@ app.use(bodyParser.json({ limit: "30mb" }));
 
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // to parse incoming requests with urlencoded payloads.
 
-app.use(cors({ origin: "*" }));    //invoke cross origin resource sharing policies
+// app.use(cors({ origin: "*" }));    //invoke cross origin resource sharing policies
+app.use(cors());
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));  //sets the directory of where we are gonna store our assets.
 
@@ -63,7 +64,7 @@ const upload = multer({ storage });
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
-
+app.patch("/users/:id", verifyToken, upload.single("picturePath"), updateProfile);
 
 /* ROUTES */
 app.use("/auth", authRoutes);

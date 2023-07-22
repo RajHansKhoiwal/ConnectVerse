@@ -73,3 +73,28 @@ export const likePost = async (req, res) => {
         res.status(404).json({ message: err.message });
     }
 };
+
+export const updateUserPicturePath = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { userPicturePath } = req.body;
+
+        // Validate the input
+        if (!userPicturePath || typeof userPicturePath !== "string") {
+            return res.status(400).json({ message: "Invalid input. userPicturePath must be a non-empty string." });
+        }
+
+        const posts = await Post.find({ userId: id });
+        const updatedPosts = await Promise.all(
+            posts.map(async (post) => {
+                post.userPicturePath = userPicturePath;
+                return await post.save();
+            })
+        );
+
+
+        res.status(200).json(updatedPosts);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
