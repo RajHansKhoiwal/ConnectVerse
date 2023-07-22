@@ -65,6 +65,8 @@ const Form = ({ userId }) => {
         instagramId: user.instagramId,
     };
 
+    let previousImage = picturePath
+
     const EditProfile = async (values, onSubmitProps) => {
         try {
 
@@ -72,7 +74,11 @@ const Form = ({ userId }) => {
             for (let value in values) {
                 formData.append(value, values[value]);
             }
-            formData.append("picturePath", values.picturePath.path);
+
+            // if new image is uploaded
+            if (values.picturePath !== previousImage) {
+                formData.append("picturePath", values.picturePath.path);
+            }
 
             const savedUserResponse = await fetch(`http://localhost:3001/users/${userId}`, {
                 method: "PATCH",
@@ -95,9 +101,14 @@ const Form = ({ userId }) => {
     const editProfilePic = async (values, onSubmitProps) => {
         try {
 
-            console.log("to Update Profile pic", values.picturePath.path);
-
-            const picture = { userPicturePath: values.picturePath.path };
+            let picture;
+            // if new image is uploaded
+            if (values.picturePath !== previousImage) {
+                picture = { userPicturePath: values.picturePath.path };
+            }
+            else {
+                picture = { userPicturePath: picturePath };
+            }
 
             const response = await fetch(
                 `http://localhost:3001/posts/editprofilepic/${userId}`,
@@ -108,7 +119,6 @@ const Form = ({ userId }) => {
                 }
             );
             const data = await response.json();
-            console.log(data);
             onSubmitProps.resetForm();
             navigate("/home");
         } catch (error) {
@@ -222,7 +232,6 @@ const Form = ({ userId }) => {
                                 acceptedFiles=".jpg,.jpeg,.png"
                                 multiple={false}
                                 onDrop={(acceptedFiles) => {
-                                    console.log(acceptedFiles); // Check if the file data is received correctly
                                     setFieldValue("picturePath", acceptedFiles[0]);
                                 }}
 
