@@ -87,10 +87,10 @@ const PostWidget = ({
                         <Typography>{comments.length}</Typography>
                     </FlexBetween>
                 </FlexBetween>
-
-                <IconButton>
+                {/* Functionality to add later */}
+                {/* <IconButton>
                     <ShareOutlined />
-                </IconButton>
+                </IconButton> */}
             </FlexBetween>
             {isComments && (
                 <Box mt="0.5rem">

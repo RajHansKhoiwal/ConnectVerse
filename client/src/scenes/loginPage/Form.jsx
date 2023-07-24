@@ -183,7 +183,7 @@ const Form = () => {
                                     Other Social Profiles
                                 </Typography>
                                 <TextField
-                                    label="Twitter Handle"
+                                    label="Twitter/X Handle"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.twitterId}

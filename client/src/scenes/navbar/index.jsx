@@ -71,8 +71,8 @@ const Navbar = () => {
                 >
                     Beta
                 </Typography>
-
-                {isNonMobileScreens && (
+                {/* Functionality to add later */}
+                {/* {isNonMobileScreens && (
                     <FlexBetween
                         backgroundColor={neutralLight}
                         borderRadius="9px"
@@ -84,7 +84,7 @@ const Navbar = () => {
                             <Search />
                         </IconButton>
                     </FlexBetween>
-                )}
+                )} */}
             </FlexBetween>
 
             {/* DESKTOP NAV */}

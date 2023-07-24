@@ -107,11 +107,12 @@ const UserWidget = ({ userId, picturePath }) => {
                         <img src="../assets/twitter.png" alt="twitter" />
                         <Box>
                             <Typography color={main} fontWeight="500">
-                                Twitter Handle
+                                Twitter/X Handle
                             </Typography>
 
-                            <Typography color={medium} fontWeight="500">
-                                {twitterId !== "" ? twitterId : "Not Mentioned"}
+                            <Typography color={medium}>
+                                {instagramId !== "" ? (<a href={`https://www.x.com/${twitterId}`} target="_blank"
+                                    style={{ color: medium }}>{twitterId} </a>) : "Not Mentioned"}
                             </Typography>
 
                         </Box>
