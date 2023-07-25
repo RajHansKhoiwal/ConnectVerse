@@ -104,15 +104,15 @@ const UserWidget = ({ userId, picturePath }) => {
 
                 <FlexBetween gap="1rem" mb="1rem">
                     <FlexBetween gap="1rem">
-                        <img src="../assets/twitter.png" alt="twitter" />
+                        <img src="../assets/x.png" alt="twitter" />
                         <Box>
                             <Typography color={main} fontWeight="500">
                                 Twitter/X Handle
                             </Typography>
 
                             <Typography color={medium}>
-                                {instagramId !== "" ? (<a href={`https://www.x.com/${twitterId}`} target="_blank"
-                                    style={{ color: medium }}>{twitterId} </a>) : "Not Mentioned"}
+                                {twitterId !== "" ? (<a href={`https://www.x.com/${twitterId}`} target="_blank"
+                                    style={{ color: medium }}>{twitterId} </a>) : "---"}
                             </Typography>
 
                         </Box>
@@ -126,7 +126,7 @@ const UserWidget = ({ userId, picturePath }) => {
                             <Typography color={main} fontWeight="500">
                                 Linkedin
                             </Typography>
-                            <Typography color={medium}> {linkedinId !== "" ? (<a href={linkedinId} target="_blank" style={{ color: medium }}>{firstName} {lastName}</a>) : "Not Mentioned"}</Typography>
+                            <Typography color={medium}> {linkedinId !== "" ? (<a href={linkedinId} target="_blank" style={{ color: medium }}>{firstName} {lastName}</a>) : "---"}</Typography>
                         </Box>
                     </FlexBetween>
                 </FlexBetween>
@@ -140,7 +140,7 @@ const UserWidget = ({ userId, picturePath }) => {
                             </Typography>
                             <Typography color={medium}>
                                 {instagramId !== "" ? (<a href={`https://www.instagram.com/${instagramId}`} target="_blank"
-                                    style={{ color: medium }}>{instagramId} </a>) : "Not Mentioned"}
+                                    style={{ color: medium }}>{instagramId} </a>) : "---"}
                             </Typography>
                         </Box>
                     </FlexBetween>
