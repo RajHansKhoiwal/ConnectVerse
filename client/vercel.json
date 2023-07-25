@@ -1,14 +1,17 @@
 {
     "builds": [
         {
-            "src": "./app.js",
-            "use": "@vercel/node"
+            "src": "package.json",
+            "use": "vercel/next"
         }
     ],
     "routes": [
         {
-            "src": "/.*",
-            "dest": "app.js"
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
-    ]
+    ],
+    "env": {
+        "REACT_APP_SERVERDOMAIN": "https://connectverse-zbfq.onrender.com"
+    }
 }
