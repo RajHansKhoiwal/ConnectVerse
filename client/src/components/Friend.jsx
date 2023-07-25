@@ -24,7 +24,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     // create an api call to add the friend and remove the friend
     const patchFriend = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${_id}/${friendId}`,
+            `${process.env.REACT_APP_SERVERDOMAIN}/users/${_id}/${friendId}`,
             {
                 method: "PATCH",
                 headers: {

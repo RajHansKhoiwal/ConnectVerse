@@ -31,7 +31,7 @@ const Form = ({ userId }) => {
     const [user, setUser] = useState(null);
 
     const getUser = async () => {
-        const response = await fetch(`http://localhost:3001/users/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_SERVERDOMAIN}/users/${userId}`, {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` },
         });
@@ -80,7 +80,7 @@ const Form = ({ userId }) => {
                 formData.append("picturePath", values.picturePath.path);
             }
 
-            const savedUserResponse = await fetch(`http://localhost:3001/users/${userId}`, {
+            const savedUserResponse = await fetch(`${process.env.REACT_APP_SERVERDOMAIN}/users/${userId}`, {
                 method: "PATCH",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData
@@ -111,7 +111,7 @@ const Form = ({ userId }) => {
             }
 
             const response = await fetch(
-                `http://localhost:3001/posts/editprofilepic/${userId}`,
+                `${process.env.REACT_APP_SERVERDOMAIN}/posts/editprofilepic/${userId}`,
                 {
                     method: "PATCH",
                     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
